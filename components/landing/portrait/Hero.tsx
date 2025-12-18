@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gray-300">
         <img
           src="/landing-bg.jpg"
-          alt="Art Studio Background"
+          alt="Bonds and Beyond Background"
           className="object-cover w-full h-full opacity-60"
         />
         <div className="absolute inset-0 bg-black/30" />

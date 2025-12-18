@@ -5,18 +5,22 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import SmartphoneIcon from '@mui/icons-material/Smartphone';
+import BrushIcon from '@mui/icons-material/Brush';
+import PaletteIcon from '@mui/icons-material/Palette';
 import LanguageIcon from '@mui/icons-material/Language';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import SecurityIcon from '@mui/icons-material/Security';
 
 // Icon aliases
 const ChevronRight = ChevronRightIcon;
 const Sparkles = AutoAwesomeIcon;
-const CreditCard = CreditCardIcon;
-const Smartphone = SmartphoneIcon;
+const Brush = BrushIcon;
+const Palette = PaletteIcon;
 const Globe = LanguageIcon;
-const Award = EmojiEventsIcon;
+const Verified = VerifiedIcon;
+const Shipping = LocalShippingIcon;
+const Security = SecurityIcon;
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -60,18 +64,18 @@ const HeroSection = () => {
   };
 
   const valueBadges = [
-    { icon: Award, text: "Founding Member Benefits" },
-    { icon: CreditCard, text: "Physical + Digital Card" },
-    { icon: Smartphone, text: "Mobile App Coming 2026" },
-    { icon: Sparkles, text: "$50 AI Credits Included" }
+    { icon: Brush, text: "Original Artworks" },
+    { icon: Palette, text: "Custom Portraits" },
+    { icon: Verified, text: "Certified Artists" },
+    { icon: Shipping, text: "Worldwide Delivery" }
   ];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <section className="relative overflow-hidden bg-gradient-to-b from-amber-50/50 via-white to-rose-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgb(99, 102, 241) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgb(217, 119, 6) 1px, transparent 1px)`,
           backgroundSize: '40px 40px'
         }} />
       </div>
@@ -85,9 +89,9 @@ const HeroSection = () => {
         >
           {/* Announcement Badge */}
           <motion.div variants={itemVariants} className="mb-8">
-            <span className="inline-flex items-center rounded-full bg-indigo-100 dark:bg-indigo-900/30 px-4 py-2 text-sm font-medium text-indigo-800 dark:text-indigo-300">
+            <span className="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/30 px-4 py-2 text-sm font-medium text-amber-800 dark:text-amber-300">
               <Sparkles className="mr-2 h-4 w-4" />
-              Limited Time: 50% Founding Member Discount
+              Exclusive Collection: Commission Your Custom Portrait Today
             </span>
           </motion.div>
 
@@ -96,18 +100,18 @@ const HeroSection = () => {
             variants={itemVariants}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white"
           >
-            Make your first
-            <span className="block bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              impression count
+            Discover Extraordinary
+            <span className="block bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent">
+              Art & Portraits
             </span>
           </motion.h1>
 
           {/* Subheadline */}
           <motion.p
             variants={itemVariants}
-            className="mx-auto mt-6 max-w-2xl text-lg sm:text-xl text-gray-600 dark:text-gray-300"
+            className="mx-auto mt-6 max-w-3xl text-lg sm:text-xl text-gray-600 dark:text-gray-300"
           >
-            Transform your networking with smart NFC business cards. Share your complete professional profile with just a tap. Join 5000+ professionals who've already upgraded their networking game.
+            Bring beauty into your space with our curated collection of original paintings, handcrafted sculptures, and custom portraits. From stunning oil paintings to contemporary sculptures and personalized portraits that capture your essence — find the perfect piece to transform your home or gift a masterpiece to someone special.
           </motion.p>
 
           {/* Value Badges */}
@@ -135,16 +139,16 @@ const HeroSection = () => {
           >
             <Link
               href="/templates"
-              className="group relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:shadow-xl transform transition hover:scale-105"
+              className="group relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-amber-600 to-rose-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:shadow-xl transform transition hover:scale-105"
             >
-              Browse Templates
+              Explore Gallery
               <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/founding-member"
               className="inline-flex items-center justify-center rounded-full border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-8 py-4 text-lg font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
             >
-              Become a Founding Member
+              Commission a Portrait
               <ChevronRight className="ml-2 h-5 w-5" />
             </Link>
           </motion.div>
@@ -158,61 +162,82 @@ const HeroSection = () => {
               <svg className="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              30-Day Money Back
+              100% Authentic Artwork
             </div>
             <div className="flex items-center">
-              <svg className="mr-2 h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              Secure Checkout
+              <Security className="mr-2 h-5 w-5 text-green-500" />
+              Secure Payment
             </div>
             <div className="flex items-center">
               <Globe className="mr-2 h-5 w-5 text-green-500" />
-              Ships Worldwide
+              Global Shipping
             </div>
           </motion.div>
         </motion.div>
 
-        {/* NFC Card Showcase - 3D Animation */}
+        {/* Art Gallery Showcase */}
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
           className="mt-16 relative"
         >
-          <div className="relative mx-auto max-w-4xl">
-            <motion.div
-              className="relative z-10 mx-auto"
-              whileHover="hover"
-              variants={cardVariants}
-              style={{ perspective: 1000 }}
-            >
-              {/* Card Mockup */}
-              <div className="relative mx-auto w-full max-w-md">
-                <div className="aspect-[1.586/1] rounded-2xl bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 p-8 shadow-2xl">
-                  {/* Card Content */}
-                  <div className="flex h-full flex-col justify-between text-white">
-                    <div>
-                      <div className="text-2xl font-bold">Bonds N Beyond</div>
-                      <div className="mt-1 text-sm opacity-80">Premium NFC Card</div>
+          <div className="relative mx-auto max-w-5xl">
+            {/* Gallery Grid */}
+            <div className="grid grid-cols-3 gap-4 md:gap-6">
+              {/* Main Painting */}
+              <motion.div
+                className="col-span-2 row-span-2 relative z-10"
+                whileHover="hover"
+                variants={cardVariants}
+                style={{ perspective: 1000 }}
+              >
+                <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-amber-100 via-rose-50 to-amber-50 dark:from-amber-900/30 dark:via-rose-900/20 dark:to-amber-900/30 p-4 shadow-2xl overflow-hidden">
+                  <div className="h-full w-full rounded-xl bg-gradient-to-br from-amber-200 via-rose-100 to-amber-100 dark:from-amber-800/40 dark:via-rose-800/30 dark:to-amber-800/40 flex items-center justify-center">
+                    <div className="text-center p-6">
+                      <Brush className="h-16 w-16 mx-auto text-amber-600 dark:text-amber-400 mb-4" />
+                      <div className="text-xl font-bold text-gray-800 dark:text-white">Original Oil Painting</div>
+                      <div className="mt-2 text-sm text-gray-600 dark:text-gray-300">&quot;Sunset Reflections&quot; by Master Artist</div>
+                      <div className="mt-3 text-lg font-semibold text-amber-600 dark:text-amber-400">From $299</div>
                     </div>
-                    <div>
-                      <div className="mb-4">
-                        <div className="h-12 w-12 rounded bg-gradient-to-br from-yellow-400 to-yellow-600 opacity-90" />
-                      </div>
-                      <div className="text-lg font-semibold">Your Name</div>
-                      <div className="text-sm opacity-80">Tap to Connect</div>
-                    </div>
-                  </div>
-                  {/* NFC Icon */}
-                  <div className="absolute bottom-4 right-4">
-                    <svg className="h-8 w-8 text-white/50" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-                    </svg>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+
+              {/* Portrait */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="relative"
+              >
+                <div className="aspect-[3/4] rounded-xl bg-gradient-to-br from-rose-100 to-pink-50 dark:from-rose-900/30 dark:to-pink-900/20 p-3 shadow-lg">
+                  <div className="h-full w-full rounded-lg bg-gradient-to-br from-rose-200 to-pink-100 dark:from-rose-800/40 dark:to-pink-800/30 flex items-center justify-center">
+                    <div className="text-center p-3">
+                      <Palette className="h-10 w-10 mx-auto text-rose-600 dark:text-rose-400 mb-2" />
+                      <div className="text-sm font-bold text-gray-800 dark:text-white">Custom Portrait</div>
+                      <div className="mt-1 text-xs text-gray-600 dark:text-gray-300">From $199</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Sculpture */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="relative"
+              >
+                <div className="aspect-[3/4] rounded-xl bg-gradient-to-br from-gray-100 to-slate-50 dark:from-gray-800/50 dark:to-slate-800/30 p-3 shadow-lg">
+                  <div className="h-full w-full rounded-lg bg-gradient-to-br from-gray-200 to-slate-100 dark:from-gray-700/50 dark:to-slate-700/30 flex items-center justify-center">
+                    <div className="text-center p-3">
+                      <svg className="h-10 w-10 mx-auto text-gray-600 dark:text-gray-400 mb-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                      </svg>
+                      <div className="text-sm font-bold text-gray-800 dark:text-white">Sculptures</div>
+                      <div className="mt-1 text-xs text-gray-600 dark:text-gray-300">From $399</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
 
             {/* Floating Elements */}
             <motion.div
@@ -224,11 +249,11 @@ const HeroSection = () => {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="absolute -left-10 top-10 rounded-lg bg-white dark:bg-gray-800 p-3 shadow-lg"
+              className="absolute -left-10 top-10 rounded-lg bg-white dark:bg-gray-800 p-3 shadow-lg hidden md:block"
             >
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-green-500" />
-                <span className="text-sm font-medium">Instant Share</span>
+                <span className="text-sm font-medium">Hand-Painted</span>
               </div>
             </motion.div>
 
@@ -242,11 +267,11 @@ const HeroSection = () => {
                 ease: "easeInOut",
                 delay: 1
               }}
-              className="absolute -right-10 top-20 rounded-lg bg-white dark:bg-gray-800 p-3 shadow-lg"
+              className="absolute -right-10 top-20 rounded-lg bg-white dark:bg-gray-800 p-3 shadow-lg hidden md:block"
             >
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-red-500" />
-                <span className="text-sm font-medium">Analytics</span>
+                <div className="h-2 w-2 rounded-full bg-amber-500" />
+                <span className="text-sm font-medium">Certified Artists</span>
               </div>
             </motion.div>
 
@@ -260,11 +285,11 @@ const HeroSection = () => {
                 ease: "easeInOut",
                 delay: 2
               }}
-              className="absolute -left-5 bottom-10 rounded-lg bg-white dark:bg-gray-800 p-3 shadow-lg"
+              className="absolute -left-5 bottom-10 rounded-lg bg-white dark:bg-gray-800 p-3 shadow-lg hidden md:block"
             >
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-purple-500" />
-                <span className="text-sm font-medium">Lead Capture</span>
+                <div className="h-2 w-2 rounded-full bg-rose-500" />
+                <span className="text-sm font-medium">Custom Orders</span>
               </div>
             </motion.div>
           </div>

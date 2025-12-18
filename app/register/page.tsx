@@ -126,7 +126,7 @@ export default function RegisterPage() {
       <div className="hidden lg:block lg:w-1/2 relative overflow-hidden bg-gray-100">
         <div className="absolute inset-0">
           {/* Using the same background or a new one.  */}
-          <img src="/landing-bg.jpg" alt="Art Studio" className="w-full h-full object-cover opacity-80" />
+          <img src="/landing-bg.jpg" alt="Bonds and Beyond" className="w-full h-full object-cover opacity-80" />
           <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="absolute inset-0 flex flex-col justify-center px-12 text-white">
