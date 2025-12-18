@@ -425,6 +425,11 @@ export default function NFCPaymentPage() {
         const appPrice = orderData.pricing.appSubscriptionPrice || 120;
         subtotal += appPrice * quantity;
       }
+
+      // Painting price (if painting is selected)
+      if (orderData.pricing.paintingPrice) {
+        subtotal += orderData.pricing.paintingPrice;
+      }
     }
 
     // Add tax
@@ -555,6 +560,69 @@ export default function NFCPaymentPage() {
     setProcessing(true);
 
     try {
+      // TEST MODE: Bypass payment for testing
+      const TEST_MODE = true; // Set to false for production
+      if (TEST_MODE) {
+        console.log('🧪 TEST MODE: Bypassing payment...');
+
+        // Simulate successful payment
+        const testPaymentId = 'test_' + Date.now();
+
+        // Store order confirmation
+        const orderConfirmation = {
+          ...orderData,
+          paymentMethod: 'test',
+          paymentId: testPaymentId,
+          amount: getFinalAmount(),
+          pricing: {
+            ...orderData.pricing,
+            total: getFinalAmount(),
+            voucherAmount: voucherAmount || 0
+          },
+          voucherCode: voucherCode || null,
+          voucherDiscount: voucherDiscount || 0,
+          timestamp: new Date().toISOString()
+        };
+
+        localStorage.setItem('orderConfirmation', JSON.stringify(orderConfirmation));
+
+        // Update order in database
+        try {
+          await fetch('/api/process-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              orderId: orderData.orderId,
+              cardConfig: orderData.cardConfig,
+              checkoutData: {
+                email: orderData.email,
+                fullName: orderData.customerName,
+                phoneNumber: orderData.phoneNumber,
+                addressLine1: orderData.shipping.addressLine1,
+                addressLine2: orderData.shipping.addressLine2,
+                city: orderData.shipping.city,
+                state: orderData.shipping.stateProvince,
+                country: orderData.shipping.country,
+                postalCode: orderData.shipping.postalCode,
+              },
+              paymentData: {
+                paymentMethod: 'test',
+                paymentId: testPaymentId,
+                voucherCode: voucherCode || null,
+                voucherDiscount: voucherDiscount || 0,
+                voucherAmount: voucherAmount || 0,
+              }
+            })
+          });
+        } catch (e) {
+          console.log('⚠️ Could not update order, continuing anyway...');
+        }
+
+        // Redirect to success
+        router.push('/nfc/success');
+        return;
+      }
+
       let paymentResult;
 
       switch (paymentMethod) {
@@ -1109,6 +1177,17 @@ export default function NFCPaymentPage() {
                       <div className="flex justify-between">
                         <span>1 Year Bonds N Beyond App Subscription × {orderData?.cardConfig?.quantity || 1}</span>
                         <span>${orderData.pricing.appSubscriptionPrice ? (orderData.pricing.appSubscriptionPrice * (orderData?.cardConfig?.quantity || 1)).toFixed(2) : '120.00'}</span>
+                      </div>
+                    )}
+
+                    {/* Painting Price - Show only if painting is selected */}
+                    {orderData.pricing.paintingData && orderData.pricing.paintingPrice > 0 && (
+                      <div className="flex justify-between">
+                        <span className="truncate pr-2">
+                          Painting: {orderData.pricing.paintingData.paintingName}
+                          {orderData.pricing.paintingData.size?.name && ` (${orderData.pricing.paintingData.size.name})`}
+                        </span>
+                        <span>${orderData.pricing.paintingPrice.toFixed(2)}</span>
                       </div>
                     )}
 

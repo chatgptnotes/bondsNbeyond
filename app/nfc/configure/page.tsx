@@ -47,6 +47,19 @@ interface PriceSummary {
   total: number;
 }
 
+// Painting selection interface
+interface PaintingSelection {
+  type?: 'gallery' | 'custom';
+  paintingId: string;
+  paintingName: string;
+  paintingImage: string;
+  size: { id: string; name: string; label?: string };
+  quantity: number;
+  price: number;
+  originalPrice?: number;
+  timestamp?: number;
+}
+
 export default function ConfigureNewPage() {
   const router = useRouter();
   const [formData, setFormData] = useState<StepData>({
@@ -59,6 +72,7 @@ export default function ConfigureNewPage() {
   });
   const [userCountry, setUserCountry] = useState<string>('India');
   const [isLoading, setIsLoading] = useState(false);
+  const [paintingSelection, setPaintingSelection] = useState<PaintingSelection | null>(null);
 
   // Product Plan Price (Physical Card + Digital Profile)
   const PRODUCT_PLAN_PRICE = 69;
@@ -69,6 +83,18 @@ export default function ConfigureNewPage() {
     localStorage.removeItem('nfcConfig');
     localStorage.removeItem('cardConfig');
     console.log('Configure: Cleared old localStorage data');
+
+    // Load painting selection from localStorage (set by paintings page)
+    const storedPainting = localStorage.getItem('paintingSelection');
+    if (storedPainting) {
+      try {
+        const painting = JSON.parse(storedPainting);
+        setPaintingSelection(painting);
+        console.log('Configure: Loaded painting selection:', painting);
+      } catch (error) {
+        console.error('Error parsing painting selection:', error);
+      }
+    }
 
     // Get user profile data from localStorage (from welcome page)
     const userProfile = localStorage.getItem('userProfile');
@@ -284,7 +310,7 @@ export default function ConfigureNewPage() {
     // Create clean data object for storage
     // Get pattern name from the patterns array
     const selectedPattern = patterns.find(p => p.id === formData.pattern);
-    const configData = {
+    const configData: Record<string, unknown> = {
       cardFirstName: formData.cardFirstName.trim(),
       cardLastName: formData.cardLastName.trim(),
       baseMaterial: formData.baseMaterial,
@@ -292,6 +318,20 @@ export default function ConfigureNewPage() {
       colour: formData.colour,
       pattern: selectedPattern?.name || `Pattern ${formData.pattern}`
     };
+
+    // Include painting selection if present
+    if (paintingSelection) {
+      configData.painting = {
+        paintingId: paintingSelection.paintingId,
+        paintingName: paintingSelection.paintingName,
+        paintingImage: paintingSelection.paintingImage,
+        size: paintingSelection.size,
+        quantity: paintingSelection.quantity,
+        price: paintingSelection.price,
+        originalPrice: paintingSelection.originalPrice
+      };
+      console.log('Configure: Including painting in config:', configData.painting);
+    }
 
     console.log('Configure: Saving card data to localStorage:', configData);
 

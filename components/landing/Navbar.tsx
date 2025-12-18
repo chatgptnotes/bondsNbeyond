@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
@@ -10,14 +11,15 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto px-4 h-24 flex items-center justify-between">
 
                 {/* Left: Logo */}
-                <Link href="/" className="flex flex-col items-center justify-center mr-8">
-                    {/* Placeholder for Art Studio Logo - using text for now but styled artistically */}
-                    <div className="font-serif text-2xl font-bold tracking-tighter leading-none">
-                        THE PORTRAIT
-                    </div>
-                    <div className="font-sans text-[0.6rem] tracking-[0.2em] uppercase mt-1 text-gray-500">
-                        STUDIO
-                    </div>
+                <Link href="/" className="flex items-center justify-center mr-8">
+                    <Image
+                        src="/logo1.png"
+                        alt="Logo"
+                        width={140}
+                        height={60}
+                        style={{ width: 'auto', height: 'auto', maxHeight: '60px' }}
+                        priority
+                    />
                 </Link>
 
 

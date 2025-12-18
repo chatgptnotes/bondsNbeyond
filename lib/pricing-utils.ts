@@ -4,9 +4,20 @@
  * Used by checkout and payment pages to ensure consistency
  */
 
+export interface PaintingData {
+  paintingId: string;
+  paintingName: string;
+  paintingImage: string;
+  size: { id: string; name: string; label?: string };
+  quantity: number;
+  price: number;
+  originalPrice?: number;
+}
+
 export interface CardConfig {
   baseMaterial?: 'pvc' | 'metal' | 'wood' | 'digital';
   quantity?: number;
+  painting?: PaintingData;
 }
 
 export interface PricingBreakdown {
@@ -14,6 +25,8 @@ export interface PricingBreakdown {
   quantity: number;
   subtotal: number;
   appSubscriptionPrice: number;
+  paintingPrice: number;
+  paintingData?: PaintingData;
   taxRate: number;
   taxAmount: number;
   shippingCost: number;
@@ -78,6 +91,10 @@ export function calculatePricing(options: CalculatePricingOptions): PricingBreak
   // Calculate subtotal (material cost only)
   const subtotal = materialPrice * quantity;
 
+  // Get painting price (if painting is selected)
+  const paintingPrice = cardConfig?.painting?.price || 0;
+  const paintingData = cardConfig?.painting;
+
   // App subscription price (founding members get it free)
   let appSubscriptionPrice = 0;
   if (includeAppSubscription && !isFoundingMember && cardConfig?.baseMaterial !== 'digital') {
@@ -90,24 +107,27 @@ export function calculatePricing(options: CalculatePricingOptions): PricingBreak
   // Get tax rate for country
   const taxRate = TAX_RATES[country] || DEFAULT_TAX_RATE;
 
-  // FIXED: Calculate tax ONLY on material price (base price), NOT on subscription
-  // Tax should only apply to the physical product, not the digital subscription
-  const taxAmount = subtotal * taxRate;
+  // FIXED: Calculate tax on material price AND painting price, NOT on subscription
+  // Tax should only apply to physical products, not the digital subscription
+  const taxableAmount = subtotal + paintingPrice;
+  const taxAmount = taxableAmount * taxRate;
 
   // Shipping cost
   const shippingCost = SHIPPING_COST;
 
-  // Total before discount
-  const totalBeforeDiscount = subtotal + appSubscriptionPrice + taxAmount + shippingCost;
+  // Total before discount (includes painting)
+  const totalBeforeDiscount = subtotal + paintingPrice + appSubscriptionPrice + taxAmount + shippingCost;
 
   // Total without app subscription (for voucher validation consistency)
-  const totalWithoutAppSubscription = subtotal + taxAmount + shippingCost;
+  const totalWithoutAppSubscription = subtotal + paintingPrice + taxAmount + shippingCost;
 
   return {
     materialPrice,
     quantity,
     subtotal,
     appSubscriptionPrice,
+    paintingPrice,
+    paintingData,
     taxRate,
     taxAmount,
     shippingCost,

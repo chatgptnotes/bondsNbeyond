@@ -203,7 +203,8 @@ export default function CheckoutPage() {
             texture: config.texture,
             pattern: config.pattern,
             color: config.colour || config.color,  // Handle both colour and color
-            fullName: `${config.cardFirstName} ${config.cardLastName}`.trim()
+            fullName: `${config.cardFirstName} ${config.cardLastName}`.trim(),
+            painting: config.painting  // Include painting data if present
           };
 
           console.log('Checkout: Processed card config for preview:', processedConfig);
@@ -482,6 +483,7 @@ export default function CheckoutPage() {
       cardConfig: {
         baseMaterial: (cardConfig?.baseMaterial as any) || 'pvc',
         quantity: quantity,
+        painting: cardConfig?.painting, // Include painting if selected
       },
       country: watchedValues.country || 'US',
       isFoundingMember: userIsFoundingMember,
@@ -495,11 +497,13 @@ export default function CheckoutPage() {
       appSubscriptionPrice: 0, // Don't show subscription here
       basePrice: pricing.materialPrice,
       subtotal: pricing.subtotal,
+      paintingPrice: pricing.paintingPrice,
+      paintingData: pricing.paintingData,
       taxAmount: pricing.taxAmount,
       shippingCost: pricing.shippingCost,
-      totalBeforeDiscount: pricing.subtotal + pricing.taxAmount, // Only material + tax
+      totalBeforeDiscount: pricing.subtotal + pricing.paintingPrice + pricing.taxAmount, // Material + painting + tax
       discountAmount: 0,
-      total: pricing.subtotal + pricing.taxAmount, // Only material + tax
+      total: pricing.subtotal + pricing.paintingPrice + pricing.taxAmount, // Material + painting + tax
       taxRate: pricing.taxRate,
       taxLabel: watchedValues.country === 'IN' ? 'GST (18%)' : 'VAT (5%)'
     };
@@ -815,6 +819,7 @@ export default function CheckoutPage() {
         cardConfig: {
           baseMaterial: (cardConfig?.baseMaterial as any) || 'pvc',
           quantity: quantity,
+          painting: cardConfig?.painting, // Include painting if selected
         },
         country: formData.country || 'US',
         isFoundingMember: userIsFoundingMember,
@@ -852,8 +857,10 @@ export default function CheckoutPage() {
           appSubscriptionPrice: fullPricing.appSubscriptionPrice, // Include subscription for payment page
           basePrice: fullPricing.materialPrice,
           subtotal: fullPricing.subtotal,
+          paintingPrice: fullPricing.paintingPrice, // Include painting price
+          paintingData: fullPricing.paintingData, // Include painting data for display
           shippingCost: fullPricing.shippingCost,
-          taxAmount: fullPricing.taxAmount, // Tax only on material price
+          taxAmount: fullPricing.taxAmount, // Tax on material + painting price
           totalBeforeDiscount: fullPricing.totalBeforeDiscount,
           discountAmount: 0, // No discount on checkout
           total: fullPricing.totalBeforeDiscount, // Full price with subscription for payment page
@@ -1301,6 +1308,17 @@ export default function CheckoutPage() {
                   </span>
                   <span>${(pricing.materialPrice * quantity).toFixed(2)}</span>
                 </div>
+
+                {/* Painting Price - Show only if painting is selected */}
+                {pricing.paintingData && pricing.paintingPrice > 0 && (
+                  <div className="flex justify-between">
+                    <span className="truncate pr-2">
+                      Painting: {pricing.paintingData.paintingName}
+                      {pricing.paintingData.size?.name && ` (${pricing.paintingData.size.name})`}
+                    </span>
+                    <span>${pricing.paintingPrice.toFixed(2)}</span>
+                  </div>
+                )}
 
                 <div className="flex justify-between">
                   <span>Customization</span>
